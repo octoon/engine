@@ -1,0 +1,9 @@
+[submodule "octoon-math"]
+	path = octoon-math
+	url = https://github.com/octoon/math.git
+[submodule "octoon-models"]
+	path = octoon-models
+	url = https://github.com/octoon/models.git
+[submodule "octoon-scene"]
+	path = octoon-scene
+	url = https://github.com/octoon/scene.git

@@ -1,0 +1,9 @@
+[package]
+name = "octoon"
+version = "0.1.7"
+license = "MIT"
+authors = ["Rui <2221870259@qq.com>"]
+edition = "2018"
+description = "Graphics library for Rust."
+homepage = "https://github.com/octoon/engine"
+repository = "https://github.com/octoon/engine.git"
