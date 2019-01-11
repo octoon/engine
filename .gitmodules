@@ -7,3 +7,6 @@
 [submodule "octoon-scene"]
 	path = octoon-scene
 	url = https://github.com/octoon/scene.git
+[submodule "octoon-animation"]
+	path = octoon-animation
+	url = https://github.com/octoon/animation.git
