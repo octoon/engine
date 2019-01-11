@@ -1,5 +1,6 @@
 /target
 /examples/webgl/target
 /examples/model/target
+/examples/pmx/target
 **/*.rs.bk
 Cargo.lock
