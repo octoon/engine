@@ -8,7 +8,7 @@ fn main()
 
     for i in 0..50
     {
-        ks.push(Keyframe::<f32>::new(i as f32, f32::sin(i as f32), None));
+        ks.push(Keyframe::new(i as f32, f32::sin(i as f32), None));
     }
 
     let anim = AnimationCurve::new(ks, None);
