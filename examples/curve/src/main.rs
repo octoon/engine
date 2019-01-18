@@ -11,7 +11,7 @@ fn main()
         ks.push(Keyframe::new(i as f32, f32::sin(i as f32), None));
     }
 
-    let anim = AnimationCurve::new(ks, None);
+    let anim = AnimationCurve::new_with(ks, None);
 
     for i in 0..100
     {
