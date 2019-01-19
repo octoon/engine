@@ -3,5 +3,6 @@
 /examples/model/target
 /examples/pmx/target
 /examples/curve/target
+/examples/vmd/target
 **/*.rs.bk
 Cargo.lock
