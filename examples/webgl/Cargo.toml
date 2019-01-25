@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 octoon-math = { version = "0.1", features = ["serialize"] }
 octoon-models = { git = "https://github.com/octoon/models.git" }
-octoon-scene = { path = "../../octoon-scene" }
+octoon-scene = { git = "https://github.com/octoon/scene.git" }
 octoon-renderer = { path = "../../octoon-renderer", features = ["default", "webgl"] }
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "asmjs"))'.dependencies]
