@@ -15,9 +15,9 @@ use octoon_scene::geometries::{ SphereGeometry };
 use octoon_scene::loader::{TextureLoader, ModelLoader};
 use octoon_scene::scene::Scene;
 use octoon_scene::spectrum::{Kelvin, Lumens, LED};
-use octoon_scene::window::Window;
 use octoon_scene::materials::{StandardMaterial, SkyboxMaterial};
 use octoon_scene::shapes::MeshShape;
+use octoon_renderer::window::Window;
 
 #[macro_use]
 #[cfg(any(target_arch = "wasm32", target_arch = "asmjs"))]
