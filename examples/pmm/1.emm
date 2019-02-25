@@ -1,0 +1,10 @@
+[Info]
+Version = 3
+
+[Object]
+Pmd1 = E:\resources\Model\シンプル風ステージ.pmx
+
+[Effect]
+Default = none
+Pmd1 = none
+

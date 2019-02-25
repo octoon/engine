@@ -1,0 +1,11 @@
+[package]
+name = "pmm"
+version = "0.1.0"
+license = "MIT"
+authors = ["Rui <2221870259@qq.com>"]
+homepage = "https://github.com/octoon/engine"
+repository = "https://github.com/octoon/engine.git"
+keywords = ["model", "load", "read"]
+
+[dependencies]
+octoon-models = { path="../../octoon-models"}
