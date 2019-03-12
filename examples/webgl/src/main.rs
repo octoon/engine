@@ -3,6 +3,7 @@
 #[macro_use]
 extern crate octoon_math;
 extern crate octoon_scene;
+extern crate octoon_renderer;
 
 use std::sync::Arc;
 use std::path::Path;
@@ -12,7 +13,7 @@ use octoon_scene::core::{Object, Light, LightType};
 use octoon_scene::lights::{ PointLight, SkyLight };
 use octoon_scene::cameras::{ PerspectiveCamera };
 use octoon_scene::geometries::{ SphereGeometry };
-use octoon_scene::loader::{TextureLoader, ModelLoader};
+use octoon_scene::loaders::{TextureLoader, ModelLoader};
 use octoon_scene::scene::Scene;
 use octoon_scene::spectrum::{Kelvin, Lumens, LED};
 use octoon_scene::materials::{StandardMaterial, SkyboxMaterial};

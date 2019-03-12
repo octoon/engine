@@ -3,10 +3,8 @@ Version = 3
 
 [Object]
 Pmd1 = E:\resources\Model\シンプル風ステージ.pmx
-Pmd2 = E:\resources\Model\TDA School uniform Miku\Tda School uniform Miku.pmx
 
 [Effect]
 Default = none
 Pmd1 = none
-Pmd2 = none
 
