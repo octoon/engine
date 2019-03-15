@@ -1,6 +1,6 @@
-extern crate octoon_animation as anim;
+extern crate octoon;
 
-use anim::{VMDLoader};
+use octoon::animation::{VMDLoader};
 
 fn main()
 {

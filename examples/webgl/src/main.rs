@@ -1,24 +1,22 @@
 #![recursion_limit = "512"]
 
 #[macro_use]
-extern crate octoon_math;
-extern crate octoon_scene;
-extern crate octoon_renderer;
+extern crate octoon;
 
 use std::sync::Arc;
 use std::path::Path;
 
-use octoon_math::{float3, float4x4, Quaternion, One};
-use octoon_scene::core::{Object, Light, LightType};
-use octoon_scene::lights::{ PointLight, SkyLight };
-use octoon_scene::cameras::{ PerspectiveCamera };
-use octoon_scene::geometries::{ SphereGeometry };
-use octoon_scene::loaders::{TextureLoader, ModelLoader};
-use octoon_scene::scene::Scene;
-use octoon_scene::spectrum::{Kelvin, Lumens, LED};
-use octoon_scene::materials::{StandardMaterial, SkyboxMaterial};
-use octoon_scene::shapes::MeshShape;
-use octoon_renderer::window::Window;
+use octoon::math::{float3, float4x4, Quaternion, One};
+use octoon::scene::core::{Object, Light, LightType};
+use octoon::scene::lights::{ PointLight, SkyLight };
+use octoon::scene::cameras::{ PerspectiveCamera };
+use octoon::scene::geometries::{ SphereGeometry };
+use octoon::scene::loaders::{TextureLoader, ModelLoader};
+use octoon::scene::scene::Scene;
+use octoon::scene::spectrum::{Kelvin, Lumens, LED};
+use octoon::scene::materials::{StandardMaterial, SkyboxMaterial};
+use octoon::scene::shapes::MeshShape;
+use octoon::renderer::window::Window;
 
 #[macro_use]
 #[cfg(any(target_arch = "wasm32", target_arch = "asmjs"))]
@@ -29,7 +27,7 @@ use stdweb::unstable::TryInto;
 
 pub fn main()
 {
-	octoon_scene::core::log::init_log().unwrap();
+	octoon::scene::core::log::init_log().unwrap();
 
 	let irradiance = Arc::new(TextureLoader::load_from_memory(include_bytes!("../static/output_iem.png")).unwrap());
 

@@ -1,6 +1,6 @@
-extern crate octoon_animation as anim;
+extern crate octoon;
 
-use anim::{Keyframe, AnimationCurve, Evaluate};
+use octoon::animation::{Keyframe, AnimationCurve, Evaluate};
 
 fn main()
 {

@@ -1,14 +1,11 @@
-extern crate octoon_scene as scene;
-extern crate octoon_renderer;
-
 #[macro_use]
-extern crate octoon_math;
+extern crate octoon;
 
-use scene::{SkyLight, TextureLoader, PerspectiveCamera};
-use scene::loaders::pmm::{PMMLoader};
-use octoon_renderer::window::Window;
 use std::sync::Arc;
-use octoon_math::{float3};
+use octoon::math::{float3};
+use octoon::scene::{SkyLight, TextureLoader, PerspectiveCamera};
+use octoon::scene::loaders::pmm::{PMMLoader};
+use octoon::renderer::window::Window;
 
 fn main()
 {

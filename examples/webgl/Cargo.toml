@@ -5,10 +5,7 @@ authors = ["Rui <2221870259@qq.com>"]
 edition = "2018"
 
 [dependencies]
-octoon-math = { version = "0.1", features = ["serialize"] }
-octoon-models = { git = "https://github.com/octoon/models.git" }
-octoon-scene = { git = "https://github.com/octoon/scene.git" }
-octoon-renderer = { path = "../../octoon-renderer", features = ["default", "webgl"] }
+octoon = { path="../../"}
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "asmjs"))'.dependencies]
 stdweb = "0.4.10"

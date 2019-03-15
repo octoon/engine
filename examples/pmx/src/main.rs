@@ -1,8 +1,8 @@
-extern crate octoon_models as model;
+extern crate octoon;
 
 fn main()
 {
-	let model = model::open("./安特.pmx").unwrap();
+	let model = octoon::models::open("./安特.pmx").unwrap();
 
 	println!("model count: {}", model.meshes.len());
 	println!("texture count: {}", model.textures.len());

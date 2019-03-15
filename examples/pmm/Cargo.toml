@@ -8,7 +8,4 @@ repository = "https://github.com/octoon/engine.git"
 keywords = ["model", "load", "read"]
 
 [dependencies]
-octoon-math = { version = "0.1", features = ["serialize"] }
-octoon-models = { git = "https://github.com/octoon/models.git" }
-octoon-scene = { git = "https://github.com/octoon/scene.git" }
-octoon-renderer = { git = "https://github.com/octoon/renderer.git", features = ["default", "webgl"] }
+octoon = { path="../../"}

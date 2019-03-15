@@ -8,4 +8,4 @@ repository = "https://github.com/octoon/engine.git"
 keywords = ["model", "load", "read"]
 
 [dependencies]
-octoon-models = { path="../../octoon-models"}
+octoon = { path="../../"}
