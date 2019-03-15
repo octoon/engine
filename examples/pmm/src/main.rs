@@ -24,10 +24,10 @@ fn main()
 	scene.add(sky);
 	scene.add(&camera);
 
-	//let mut window = Window::new("PMM Loader Example");
-	//window.update(move |renderer, time|
-	//{
-	//	camera.upload(renderer);
-	//	renderer.render(&scene);
-	//});
+	let mut window = Window::new("PMM Loader Example");
+	window.update(move |renderer, time|
+	{
+		camera.upload(renderer);
+		renderer.render(&scene);
+	});
 }
