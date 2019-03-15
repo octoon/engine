@@ -1,9 +1,7 @@
-extern crate stdweb;
-
-use self::stdweb::{Reference, Value, UnsafeTypedArray, JsSerialize};
-use self::stdweb::unstable::{TryFrom, TryInto};
-use self::stdweb::web::{RenderingContext, TypedArray};
-use self::stdweb::web::html_element::CanvasElement;
+use stdweb::{Reference, Value, UnsafeTypedArray, JsSerialize};
+use stdweb::unstable::{TryFrom, TryInto};
+use stdweb::web::{RenderingContext, TypedArray};
+use stdweb::web::html_element::CanvasElement;
 
 pub trait AsTypedArray<'a, T>
 {

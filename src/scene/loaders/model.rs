@@ -2,6 +2,7 @@ use std::sync::Arc;
 use std::path::Path;
 use std::io::BufRead;
 use std::io::prelude::Seek;
+use log::*;
 
 use crate::math::*;
 use crate::models;

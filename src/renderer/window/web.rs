@@ -1,8 +1,8 @@
 use std::rc::Rc;
 use std::cell::RefCell;
 
-use world::core::*;
-use world::scene::scene::*;
+use crate::scene::core::*;
+use crate::scene::scene::scene::*;
 
 use super::super::renderer::forward::*;
 

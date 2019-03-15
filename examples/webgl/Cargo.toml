@@ -5,7 +5,7 @@ authors = ["Rui <2221870259@qq.com>"]
 edition = "2018"
 
 [dependencies]
-octoon = { path="../../"}
+octoon = { path="../../", features = ["webgl"]}
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "asmjs"))'.dependencies]
 stdweb = "0.4.10"

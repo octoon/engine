@@ -1,9 +1,7 @@
-extern crate stdweb;
-
-use self::stdweb::{Value, JsSerialize};
-use self::stdweb::unstable::{TryInto};
-use self::stdweb::web::{ArrayBuffer};
-use self::stdweb::web::html_element::CanvasElement;
+use stdweb::{Value, JsSerialize};
+use stdweb::unstable::{TryInto};
+use stdweb::web::{ArrayBuffer};
+use stdweb::web::html_element::CanvasElement;
 
 use super::webgl_stdweb_common::*;
 
