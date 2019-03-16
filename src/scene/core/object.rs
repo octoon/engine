@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 use crate::math::{float3, float4x4};
-use super::{Resource, Downcast};
-use super::super::scene::{SceneNode};
+use super::{Resource, Downcast, Canvas};
+use super::super::scene::{SceneNode, SceneData};
 
 pub trait Object : 
 	  AsRef<SceneNode> 
@@ -95,8 +95,7 @@ pub trait Object :
 	fn set_up(&mut self, speed:float3) -> &mut SceneNode
 	{
 		let up = self.up();
-		self.set_translate(up * speed);
-		self.as_mut()
+		self.set_translate(up * speed)
 	}
 
 	#[inline(always)]
@@ -109,8 +108,7 @@ pub trait Object :
 	fn set_right(&mut self, speed:float3) -> &mut SceneNode
 	{
 		let right = self.right();
-		self.set_translate(right * speed);
-		self.as_mut()
+		self.set_translate(right * speed)
 	}
 
 	#[inline(always)]
@@ -123,7 +121,13 @@ pub trait Object :
 	fn set_forward(&mut self, speed:float3) -> &mut SceneNode
 	{
 		let forward = self.forward();
-		self.set_translate(forward * speed);
+		self.set_translate(forward * speed)
+	}
+
+	#[inline(always)]
+	fn with(&mut self, method:fn(&mut SceneData, &Canvas)) -> &mut SceneNode
+	{
+		self.as_mut().with(method);
 		self.as_mut()
 	}
 }

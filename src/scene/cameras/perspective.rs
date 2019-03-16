@@ -208,13 +208,6 @@ impl PerspectiveCamera
 	}
 
 	#[inline]
-	pub fn with(&mut self, method:fn(&mut SceneData, &Canvas)) -> &mut Self
-	{
-		self.node.with(method);
-		self
-	}
-
-	#[inline]
 	pub fn upload(&mut self, canvas:&Canvas)
 	{
 		if 	self.width_rel as u32 != canvas.width() || 
