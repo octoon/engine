@@ -170,7 +170,7 @@ impl SceneNode
 	}
 
 	#[inline(always)]
-	pub fn with<T:FnMut(&Canvas) + 'static>(&mut self, method:T) -> &mut Self
+	pub fn with(&mut self, method:fn(&mut SceneData, &Canvas)) -> &mut Self
 	{
 		self.data.borrow_mut().with(method);
 		self

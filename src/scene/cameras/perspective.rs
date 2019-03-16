@@ -6,7 +6,7 @@ use std::any::Any;
 
 use crate::math::*;
 
-use super::super::scene::{ SceneNode, SceneSubData };
+use super::super::scene::{ SceneData, SceneNode, SceneSubData };
 use super::super::core::{Object, Downcast, Resource, Camera, CameraType, CameraData, Canvas, Dimensions};
 use super::super::materials::{ CustomMaterial };
 
@@ -43,9 +43,36 @@ impl PerspectiveCamera
 		material.state.clear_color = Some((0.0, 0.0, 0.0, 0.0));
 		material.state.viewport = Some((0.0, 0.0, 1.0, 1.0));
 
+	    fn update(node:&mut SceneData, canvas:&Canvas)
+	    {
+			let fov = 60.0;
+			let ratio = canvas.width() as f32 / canvas.height() as f32;
+			let znear = 0.001;
+			let zfar = 65535.0;
+
+			let projection = float4x4::perspective_fov_lh(fov, ratio, znear, zfar);
+			let projection_inverse = projection.inverse();
+			let view_projection = projection * node.transform_inverse();
+			let view_projection_inverse = view_projection.inverse();
+
+			let userdata = CameraData
+			{
+				kind:CameraType::Main,
+				view:node.transform_inverse(),
+				view_inverse:node.transform(),
+				projection:projection,
+				projection_inverse:projection_inverse,
+				view_projection:view_projection,
+				view_projection_inverse:view_projection_inverse,
+			};
+
+			node.set_user_data(Box::new(userdata));
+	    }
+
 		let mut node = SceneNode::new(SceneSubData::Camera);
 		node.set_material(Some(material.into()));
 		node.set_user_data(Box::new(CameraData::new()));
+		node.with(update);
 
 		Self
 		{
@@ -178,6 +205,13 @@ impl PerspectiveCamera
 		// fov = film_size / focal_length
 		let fov = self.film_size() / self.focal_length();
 		fov.atan().to_degrees()
+	}
+
+	#[inline]
+	pub fn with(&mut self, method:fn(&mut SceneData, &Canvas)) -> &mut Self
+	{
+		self.node.with(method);
+		self
 	}
 
 	#[inline]

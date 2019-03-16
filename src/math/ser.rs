@@ -169,6 +169,42 @@ impl<'de, T: Deserialize<'de> + Copy> Visitor<'de> for QuatVisitor<T>
 	}
 }
 
+impl<'de, T: Deserialize<'de> + Copy> Visitor<'de> for DualVisitor<T>
+{
+	type Value = Dual<T>;
+
+	fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result
+	{
+		f.write_str("A sequence of length 8")
+	}
+
+	fn visit_seq<A>(self, mut a: A) -> Result<Self::Value, A::Error> where A: SeqAccess<'de>,
+	{
+		let x1: Option<T> = a.next_element()?;
+		let y1: Option<T> = a.next_element()?;
+		let z1: Option<T> = a.next_element()?;
+		let w1: Option<T> = a.next_element()?;
+		let x2: Option<T> = a.next_element()?;
+		let y2: Option<T> = a.next_element()?;
+		let z2: Option<T> = a.next_element()?;
+		let w2: Option<T> = a.next_element()?;
+
+		if 	x1.is_some() && y1.is_some() && z1.is_some() && w1.is_some() && 
+			x2.is_some() && y2.is_some() && z2.is_some() && w2.is_some()
+		{
+			Ok(Dual::new(
+				Quat::new(x1.unwrap(), y1.unwrap(), z1.unwrap(), w1.unwrap()),
+				Quat::new(x2.unwrap(), y2.unwrap(), z2.unwrap(), w2.unwrap()))
+				)
+		}
+		else
+		{
+			Err(A::Error::invalid_length(1, &"Sequence of length 8"))
+		}
+	}
+}
+
+
 impl<'de, T: Deserialize<'de> + Copy> Visitor<'de> for Mat2Visitor<T>
 {
 	type Value = Mat2<T>;
@@ -328,6 +364,23 @@ impl<T: Serialize> Serialize for Quat<T>
 	}
 }
 
+impl<T: Serialize> Serialize for Dual<T>
+{
+	fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error>
+	{
+		let mut tuple = s.serialize_tuple(4)?;
+		tuple.serialize_element(&self.real.x)?;
+		tuple.serialize_element(&self.real.y)?;
+		tuple.serialize_element(&self.real.z)?;
+		tuple.serialize_element(&self.real.w)?;
+		tuple.serialize_element(&self.dual.x)?;
+		tuple.serialize_element(&self.dual.y)?;
+		tuple.serialize_element(&self.dual.z)?;
+		tuple.serialize_element(&self.dual.w)?;
+		tuple.end()
+	}
+}
+
 impl<T: Serialize> Serialize for Mat2<T>
 {
 	fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error>
@@ -413,6 +466,14 @@ impl<'de, T: Deserialize<'de> + Copy> Deserialize<'de> for Quat<T>
 	fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error>
 	{
 		d.deserialize_tuple(4, QuatVisitor::new())
+	}
+}
+
+impl<'de, T: Deserialize<'de> + Copy> Deserialize<'de> for Dual<T>
+{
+	fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error>
+	{
+		d.deserialize_tuple(8, DualVisitor::new())
 	}
 }
 

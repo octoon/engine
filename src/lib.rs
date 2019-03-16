@@ -1,7 +1,6 @@
 #![allow(non_upper_case_globals)]
 
 #[macro_use]
-#[cfg(any(feature = "serialize", feature = "webgl", feature = "default"))]
 extern crate serde_derive;
 
 #[macro_use]

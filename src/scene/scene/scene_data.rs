@@ -28,7 +28,7 @@ pub struct SceneData
 	pub geometry:Option<Arc<Geometry + 'static>>,
 	pub material:Option<Arc<Material + 'static>>,
 	pub children:Vec<SceneNode>,
-	pub dispatch:Option<Box<FnMut(&Canvas) + 'static>>,
+	pub dispatch:Option<fn(&mut Self, &Canvas)>,
 }
 
 impl SceneData
@@ -217,9 +217,9 @@ impl SceneData
 	}
 
 	#[inline(always)]
-	pub fn with<T:FnMut(&Canvas) + 'static>(&mut self, method:T) -> &mut Self
+	pub fn with(&mut self, method:fn(&mut Self, &Canvas)) -> &mut Self
 	{
-		self.dispatch = Some(Box::new(method));
+		self.dispatch = Some(method);
 		self
 	}
 
@@ -228,7 +228,7 @@ impl SceneData
 	{
 		match self.dispatch
 		{
-			Some(ref mut callback) => { callback(canvas) }
+			Some(ref mut callback) => { callback(self, canvas) }
 			_ => {}
 		}
 

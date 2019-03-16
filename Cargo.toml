@@ -17,10 +17,12 @@ rand = { version = "0.6.1", features = ["stdweb"]}
 image = { version = "0.20.1" }
 
 [dependencies.serde]
+default-features = false
 optional = true
 version = "1.0"
 
 [dependencies.serde_derive]
+default-features = false
 optional = true
 version = "1.0"
 
@@ -42,4 +44,4 @@ optional = true
 
 [features]
 default = ["serde", "serde_derive", "gl", "glfw"]
-webgl = ["stdweb", "stdweb-derive", "serde", "serde_derive"]
+webgl = ["stdweb", "stdweb-derive"]

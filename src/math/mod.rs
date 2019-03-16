@@ -9,7 +9,6 @@ pub mod quat;
 pub mod dual;
 pub mod type_size;
 pub mod consts;
-#[cfg(any(feature = "serialize", feature = "webgl", feature = "default"))]
 pub mod ser;
 
 pub use self::vec2::*;
@@ -21,7 +20,6 @@ pub use self::mat4::*;
 pub use self::quat::*;
 pub use self::dual::*;
 pub use self::consts::*;
-#[cfg(any(feature = "serialize", feature = "webgl", feature = "default"))]
 pub use self::ser::*;
 
 #[allow(non_camel_case_types)] pub type i8_1 = i8;

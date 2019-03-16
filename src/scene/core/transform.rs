@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use crate::math::{float3, Quaternion, float4x4, One, Zero};
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct Transform 
 {
 	translate:float3,

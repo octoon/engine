@@ -1519,6 +1519,14 @@ impl PMMLoader
 		let pmm = PMMFile::load(buf)?;
 		let mut scene = Scene::new();
 
+		let camera = PerspectiveCamera::builder()
+			.main(true)
+			.set_fov(30.0)
+			.set_translate(float!(0.0,0.1,10.0))
+			.build();
+
+		scene.add(camera);
+
 		for model in pmm.model
 		{
 			let mut model = ModelLoader::open(model.path)?;
