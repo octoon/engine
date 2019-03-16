@@ -1,11 +1,11 @@
-use std::io::prelude::*;
-use std::fs::File;
-
 pub mod core;
 pub mod loaders;
 
 pub use self::core::*;
 pub use self::loaders::*;
+
+use std::io::prelude::*;
+use std::fs::File;
 
 pub fn load_from_memory(buf:&[u8]) -> Result<Model>
 {

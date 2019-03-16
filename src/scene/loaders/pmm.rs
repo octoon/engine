@@ -1,12 +1,11 @@
-use std::io::{Cursor, SeekFrom};
 use std::f32;
-use std::fs::File;
+use std::io::{Cursor, SeekFrom};
 use std::io::prelude::*;
 use byteorder::{LittleEndian, ReadBytesExt};
 use encoding::{Encoding, DecoderTrap};
 use encoding::all::WINDOWS_31J;
 use crate::math::float3;
-use super::super::{Error, Result, ModelLoader, Object, Scene, PerspectiveCamera};
+use super::super::{Error, Result, Loader, ModelLoader, Object, Scene, PerspectiveCamera};
 
 // https://github.com/oigami/PMMEditor/blob/master/PMMEditor/MMDFileParser/PmmReader.cs
 pub struct PmmInt2();
@@ -1508,13 +1507,16 @@ impl PMMLoader
 		{
 		}
 	}
+}
 
-	pub fn can_read(&self, buf:&[u8]) -> bool
+impl Loader for PMMLoader
+{
+	fn can_read(&self, buf:&[u8]) -> bool
 	{
 		PmmHeader::load(&mut Cursor::new(buf)).is_ok()
 	}
 
-	pub fn load_from_memory(buf:&[u8]) -> Result<Scene>
+	fn do_load(&self, buf:&[u8]) -> Result<Scene>
 	{
 		let pmm = PMMFile::load(buf)?;
 		let mut scene = Scene::new();
@@ -1536,17 +1538,5 @@ impl PMMLoader
 		}
 
 		Ok(scene)
-	}
-
-	pub fn load_from_buf<R:BufRead + Seek>(mut r:R) -> Result<Scene>
-	{
-		PMMLoader::load_from_memory(r.fill_buf()?)
-	}
-
-	pub fn open<P: AsRef<std::path::Path>>(path:P) -> Result<Scene>
-	{
-		let mut buffer = Vec::new();
-		File::open(path)?.read_to_end(&mut buffer)?;
-		PMMLoader::load_from_memory(&buffer)
 	}
 }

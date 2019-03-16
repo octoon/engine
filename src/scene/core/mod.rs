@@ -14,6 +14,7 @@ pub mod variant;
 pub mod format;
 pub mod canvas;
 pub mod error;
+pub mod loader;
 pub mod log;
 
 pub use self::resource::*;
@@ -32,3 +33,4 @@ pub use self::variant::*;
 pub use self::format::*;
 pub use self::canvas::*;
 pub use self::error::*;
+pub use self::loader::*;
