@@ -14,9 +14,9 @@ fn main()
 	scene.add(sky);
 
 	let mut window = Window::new("PMM Loader Example");
-	window.update(move |renderer, _|
+	window.update(move |canvas, _|
 	{
-		scene.update(renderer);
-		renderer.render(&scene);
+		scene.update(canvas);
+		canvas.render(&scene);
 	});
 }
