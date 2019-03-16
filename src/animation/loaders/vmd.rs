@@ -6,7 +6,7 @@ use std::collections::HashMap;
 use byteorder::{LittleEndian, ReadBytesExt};
 use encoding::{Encoding, DecoderTrap};
 use encoding::all::WINDOWS_31J;
-use super::super::{Error, Result, Animator, AnimationClip, AnimationCurve};
+use super::super::{Error, Result, Loader, Animator, AnimationClip, AnimationCurve};
 
 pub struct VMDName{}
 pub struct VMDVector2{}
@@ -503,28 +503,34 @@ impl VMDLoader
 		}
 	}
 
-	pub fn can_read(&self, buf:&[u8]) -> bool
-	{
-		VMDHeader::load(&mut Cursor::new(buf)).is_ok()
-	}
-
 	pub fn do_save(_buf:&[u8], _model:&mut VMDFile) -> Result<()>
 	{
 		Err(Error("Not Implmention yet".to_string()))
-	}
-
-	pub fn do_load(&self, buf:&[u8]) -> Result<Animator>
-	{
-		let vmd = VMDFile::load(buf)?;
-		let motions = vmd.collect_motions();
-
-		Ok(motions)
 	}
 
 	pub fn open<P: AsRef<std::path::Path>>(path:P) -> Result<Animator>
 	{
 		let mut buffer = Vec::new();
 		File::open(path)?.read_to_end(&mut buffer)?;
-		VMDLoader::new().do_load(&buffer)
+		let vmd = VMDFile::load(&buffer)?;
+		let motions = vmd.collect_motions();
+
+		Ok(motions)
+	}
+}
+
+impl Loader for VMDLoader
+{
+	fn can_read(&self, buf:&[u8]) -> bool
+	{
+		VMDHeader::load(&mut Cursor::new(buf)).is_ok()
+	}
+
+	fn do_load(&self, buf:&[u8]) -> Result<Animator>
+	{
+		let vmd = VMDFile::load(buf)?;
+		let motions = vmd.collect_motions();
+
+		Ok(motions)
 	}
 }
