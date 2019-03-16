@@ -343,8 +343,16 @@ impl ForwardRenderer
 					if user_data.is_ok()
 					{
 						let sky = user_data.unwrap();
-						self.init_texture(&sky.radiance.unwrap()); 
-						self.init_texture(&sky.irradiance.unwrap()); 
+						match sky.radiance
+						{
+							Some(ref data) => self.init_texture(data),
+							_ => {}
+						}
+						match sky.irradiance
+						{
+							Some(ref data) => self.init_texture(data),
+							_ => {}
+						}
 					}
 				},
 				_ => {}
@@ -474,7 +482,7 @@ impl ForwardRenderer
 				self.context.uniform3f(uniform.color.as_ref(), r * intensity, g * intensity, b * intensity);	
 			}
 
-			if uniform.irradiance.is_some()
+			if uniform.irradiance.is_some() && light.irradiance.is_some()
 			{
 				let texture_uniform = self.textures.get(light.irradiance.unwrap().uuid()).unwrap();
 
@@ -485,7 +493,7 @@ impl ForwardRenderer
 				*unit += 1;
 			}
 
-			if uniform.radiance.is_some()
+			if uniform.radiance.is_some() && light.radiance.is_some()
 			{
 				let texture_uniform = self.textures.get(light.radiance.unwrap().uuid()).unwrap();
 

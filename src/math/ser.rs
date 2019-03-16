@@ -368,7 +368,7 @@ impl<T: Serialize> Serialize for Dual<T>
 {
 	fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error>
 	{
-		let mut tuple = s.serialize_tuple(4)?;
+		let mut tuple = s.serialize_tuple(8)?;
 		tuple.serialize_element(&self.real.x)?;
 		tuple.serialize_element(&self.real.y)?;
 		tuple.serialize_element(&self.real.z)?;

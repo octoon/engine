@@ -1,10 +1,8 @@
-use std::boxed::Box;
 use super::{SceneNode, SceneSubData};
 use super::super::core::{Canvas, CameraData};
 
 pub struct Scene
 {
-	pub root:Box<SceneNode>,
 	pub cameras:Vec<SceneNode>,
 	pub shapes:Vec<SceneNode>,
 	pub lights:Vec<SceneNode>,
@@ -17,7 +15,6 @@ impl Scene
 	{
 		Self
 		{
-			root:Box::new(SceneNode::new(SceneSubData::Group)),
 			cameras:Vec::new(),
 			lights:Vec::new(),
 			shapes:Vec::new(),
