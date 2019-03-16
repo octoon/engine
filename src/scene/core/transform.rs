@@ -1,7 +1,8 @@
 use std::cell::RefCell;
+use serde::ser::{Serialize, SerializeStruct, Serializer};
 use crate::math::{float3, Quaternion, float4x4, One, Zero};
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone)]
 pub struct Transform 
 {
 	translate:float3,
@@ -104,5 +105,17 @@ impl Transform
 
 			self.need_update.replace(false);
 		}
+	}
+}
+
+impl Serialize for Transform
+{
+	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	{
+		let mut s = serializer.serialize_struct("transform", 3)?;
+		s.serialize_field("translate", &self.translate)?;
+		s.serialize_field("rotation", &self.rotation)?;
+		s.serialize_field("scale", &self.scale)?;
+		s.end()
 	}
 }

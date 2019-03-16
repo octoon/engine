@@ -49,3 +49,26 @@ pub fn open<P: AsRef<std::path::Path>>(path:P) -> Result<Scene>
 	File::open(path)?.read_to_end(&mut buffer)?;
 	load_from_memory(&buffer)
 }
+
+pub fn to_string(scene:&Scene) -> Result<String>
+{
+	let json = JsonLoader::new();
+	let stream = json.do_save(scene)?;
+	unsafe
+	{
+		Ok(String::from_utf8_unchecked(stream))
+	}
+}
+
+pub fn dumps(scene:&Scene) -> Result<Vec<u8>>
+{
+	let json = JsonLoader::new();
+	json.do_save(scene)
+}
+
+pub fn dump<P: AsRef<std::path::Path>>(scene:&Scene, path:P) -> Result<()>
+{
+	let mut file = File::create(path)?;
+	file.write_all(&dumps(scene)?).unwrap();
+	Ok(())
+}

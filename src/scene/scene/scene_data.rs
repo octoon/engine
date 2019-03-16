@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use std::boxed::Box;
 use std::any::Any;
-
+use serde::ser::{Serialize, SerializeStruct, Serializer};
 use crate::math::{float3, float4x4};
 
 use super::SceneNode;
@@ -250,5 +250,24 @@ impl std::fmt::Debug for SceneData
 			self.material,
 			self.children,
 		)
+	}
+}
+
+impl Serialize for SceneData
+{
+	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	{
+		let mut s = serializer.serialize_struct("node", 4)?;
+		s.serialize_field("uuid", &self.uuid)?;
+		s.serialize_field("name", &self.name)?;
+		s.serialize_field("visible", &self.visible)?;
+		s.serialize_field("transform", &self.transform)?;
+
+		if self.children.len() > 0
+		{
+			s.serialize_field("children", &self.children)?;
+		}
+
+		s.end()
 	}
 }

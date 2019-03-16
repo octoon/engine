@@ -17,9 +17,9 @@ pub trait Object :
 	}
 
 	#[inline(always)]
-	fn set_visible(&mut self, visible: bool)
+	fn set_visible(&mut self, visible: bool) -> &mut SceneNode
 	{
-		self.as_mut().set_visible(visible);
+		self.as_mut().set_visible(visible)
 	}
 
 	#[inline(always)]
@@ -29,9 +29,9 @@ pub trait Object :
 	}
 
 	#[inline(always)]
-	fn set_name(&mut self, name: &str)
+	fn set_name(&mut self, name: &str) -> &mut SceneNode
 	{
-		self.as_mut().set_name(name);
+		self.as_mut().set_name(name)
 	}
 
 	#[inline(always)]
@@ -43,8 +43,7 @@ pub trait Object :
 	#[inline(always)]
 	fn set_translate(&mut self, pos:float3) -> &mut SceneNode
 	{
-		self.as_mut().set_translate(pos);
-		self.as_mut()
+		self.as_mut().set_translate(pos)
 	}
 
 	#[inline(always)]
@@ -56,8 +55,7 @@ pub trait Object :
 	#[inline(always)]
 	fn set_scale(&mut self, sz:float3) -> &mut SceneNode
 	{
-		self.as_mut().set_scale(sz);
-		self.as_mut()
+		self.as_mut().set_scale(sz)
 	}
 	
 	#[inline(always)]
@@ -69,8 +67,7 @@ pub trait Object :
 	#[inline(always)]
 	fn set_rotation(&mut self, rot:float3) -> &mut SceneNode
 	{
-		self.as_mut().set_rotation(rot);
-		self.as_mut()
+		self.as_mut().set_rotation(rot)
 	}
 
 	#[inline(always)]
@@ -127,7 +124,6 @@ pub trait Object :
 	#[inline(always)]
 	fn with(&mut self, method:fn(&mut SceneData, &Canvas)) -> &mut SceneNode
 	{
-		self.as_mut().with(method);
-		self.as_mut()
+		self.as_mut().with(method)
 	}
 }

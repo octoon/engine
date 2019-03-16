@@ -1,5 +1,6 @@
 use super::{SceneNode, SceneSubData};
 use super::super::core::{Canvas, CameraData};
+use serde::ser::{Serialize, Serializer, SerializeSeq};
 
 pub struct Scene
 {
@@ -106,5 +107,30 @@ impl Scene
 		{
 			shape.update(canvas);
 		}
+	}
+}
+
+impl Serialize for Scene
+{
+	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	{
+		let mut s = serializer.serialize_seq(Some(self.cameras.len() + self.lights.len() + self.shapes.len()))?;
+
+		for camera in self.cameras.iter()
+		{
+			s.serialize_element(&camera)?;
+		}
+
+		for light in self.lights.iter()
+		{
+			s.serialize_element(&light)?;
+		}
+
+		for shape in self.shapes.iter()
+		{
+			s.serialize_element(&shape)?;
+		}
+
+		s.end()
 	}
 }

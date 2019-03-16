@@ -26,6 +26,11 @@ default-features = false
 optional = true
 version = "1.0"
 
+[dependencies.serde_json]
+default-features = false
+optional = true
+version = "1.0"
+
 [dependencies.stdweb]
 version = "0.4.13"
 optional = true
@@ -43,5 +48,5 @@ version = "0.25.0"
 optional = true
 
 [features]
-default = ["serde", "serde_derive", "gl", "glfw"]
+default = ["serde", "serde_derive", "serde_json", "gl", "glfw"]
 webgl = ["stdweb", "stdweb-derive"]

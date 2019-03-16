@@ -2,7 +2,7 @@ use std::rc::Rc;
 use std::cell::RefCell;
 use std::sync::Arc;
 use std::any::Any;
-
+use serde::ser::{Serialize, Serializer};
 use crate::math::{float3, float4x4};
 
 use super::{SceneData, SceneSubData};
@@ -47,9 +47,10 @@ impl SceneNode
 	}
 
 	#[inline(always)]
-	pub fn set_visible(&mut self, visible: bool)
+	pub fn set_visible(&mut self, visible: bool) -> &mut SceneNode
 	{
 		self.data.borrow_mut().set_visible(visible);
+		self
 	}
 
 	#[inline(always)]
@@ -71,9 +72,10 @@ impl SceneNode
 	}
 
 	#[inline(always)]
-	pub fn set_name(&mut self, name: &str)
+	pub fn set_name(&mut self, name: &str) -> &mut SceneNode
 	{
 		self.data.borrow_mut().set_name(name);
+		self
 	}
 
 	#[inline(always)]
@@ -142,9 +144,10 @@ impl SceneNode
 	}
 
 	#[inline(always)]
-	pub fn set_user_data(&mut self, user_data: Box<Any + 'static>)
+	pub fn set_user_data(&mut self, user_data: Box<Any + 'static>) -> &mut Self
 	{
 		self.data.borrow_mut().set_user_data(user_data);
+		self
 	}
 
 	#[inline(always)]
@@ -205,5 +208,13 @@ impl AsMut<SceneNode> for SceneNode
 	fn as_mut(&mut self) -> &mut SceneNode
 	{
 		self
+	}
+}
+
+impl Serialize for SceneNode
+{
+	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	{
+		self.data.borrow().serialize(serializer)
 	}
 }

@@ -1,3 +1,4 @@
+extern crate serde;
 extern crate octoon;
 
 use std::sync::Arc;
@@ -12,7 +13,9 @@ fn main()
 	let mut scene = octoon::scene::open("./1.pmm").unwrap();
 	scene.add(sky);
 
-	let mut window = Window::new("PMM Loader Example");
+    println!("{}", octoon::scene::to_string(&scene).unwrap());
+
+	let mut window = Window::new("PMM Loader");
 	window.update(move |canvas, _|
 	{
 		scene.update(canvas);

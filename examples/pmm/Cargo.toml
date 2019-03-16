@@ -9,3 +9,5 @@ keywords = ["model", "load", "read"]
 
 [dependencies]
 octoon = { path="../../"}
+serde = "*"
+serde_json = "*"

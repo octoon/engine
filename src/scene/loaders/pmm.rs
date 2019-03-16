@@ -1539,4 +1539,9 @@ impl Loader for PMMLoader
 
 		Ok(scene)
 	}
+
+	fn do_save(&self, _:&Scene) -> Result<Vec<u8>>
+	{
+  		Err(Error::LoaderError("Not Implmention yet".to_string()))
+	}
 }
