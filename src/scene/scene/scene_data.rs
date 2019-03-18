@@ -23,7 +23,7 @@ pub struct SceneData
 	pub name:String,
 	pub uuid:uuid::Uuid,
 	pub transform:Transform,
-	pub sub_data:SceneSubData,
+	pub kind:SceneSubData,
 	pub user_data:Box<Any + 'static>,
 	pub geometry:Option<Arc<Geometry + 'static>>,
 	pub material:Option<Arc<Material + 'static>>,
@@ -34,13 +34,13 @@ pub struct SceneData
 impl SceneData
 {
 	#[inline]
-	pub fn new(sub_data:SceneSubData) -> Self
+	pub fn new(kind:SceneSubData) -> Self
 	{
 		let user_data = ();
 
 		Self
 		{
-			sub_data:sub_data,
+			kind:kind,
 			visible:true,
 			name:String::new(),
 			uuid:uuid::Uuid::new_v4_osrng(),
@@ -56,7 +56,7 @@ impl SceneData
 	#[inline(always)]
 	pub fn kind(&self) -> SceneSubData
 	{
-		self.sub_data
+		self.kind
 	}
 
 	#[inline(always)]
@@ -245,7 +245,7 @@ impl std::fmt::Debug for SceneData
 			self.name,
 			self.uuid,
 			self.transform,
-			self.sub_data,
+			self.kind,
 			self.geometry,
 			self.material,
 			self.children,
@@ -258,10 +258,23 @@ impl Serialize for SceneData
 	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	{
 		let mut s = serializer.serialize_struct("node", 4)?;
+		s.serialize_field("type", &self.kind)?;
 		s.serialize_field("uuid", &self.uuid)?;
 		s.serialize_field("name", &self.name)?;
 		s.serialize_field("visible", &self.visible)?;
 		s.serialize_field("transform", &self.transform)?;
+
+		match self.geometry
+		{
+			Some(ref data) => { s.serialize_field("geometry", &data.uuid())? },
+			_ => {}
+		}
+
+		match self.material
+		{
+			Some(ref data) => { s.serialize_field("material", &data.uuid())? },
+			_ => {}
+		}
 
 		if self.children.len() > 0
 		{
