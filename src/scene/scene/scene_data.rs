@@ -266,7 +266,7 @@ impl Serialize for SceneData
 
 		match self.geometry
 		{
-			Some(ref data) => { s.serialize_field("geometry", &data.uuid())? },
+			Some(ref data) => { s.serialize_field("model", &data.uuid())? },
 			_ => {}
 		}
 
