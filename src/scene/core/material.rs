@@ -102,7 +102,7 @@ impl VertexAttrib
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct RenderState
 {
 	pub viewport:Option<(f32,f32,f32,f32)>,
