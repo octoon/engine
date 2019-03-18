@@ -1,5 +1,6 @@
 use std::fmt::Debug;
 use std::collections::hash_map::HashMap;
+use serde::ser::{Serialize, Serializer, SerializeStruct};
 use super::{Resource, Format, Variant};
 
 #[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
@@ -220,4 +221,15 @@ pub trait Material :
 	fn line_width(&self) -> f32 { self.as_ref().line_width }
 
 	fn front_face(&self) -> FrontFace { self.as_ref().front_face }
+}
+
+impl Serialize for Material
+{
+	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: Serializer
+	{
+		let mut s = serializer.serialize_struct("material", 1)?;
+		s.serialize_field("attrib", &self.input_layout())?;
+		s.serialize_field("state", &self.as_ref())?;
+		s.end()
+	}
 }

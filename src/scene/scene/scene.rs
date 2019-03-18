@@ -184,11 +184,11 @@ impl Serialize for ShapeSerialize
 {
 	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	{
-		let s = serializer.serialize_seq(Some(self.geometries.len()))?;
-		//for geometry in self.geometries.iter()
-		//{
-		//	s.serialize_element(&geometry)?;
-		//}
+		let mut s = serializer.serialize_seq(Some(self.geometries.len()))?;
+		for geometry in self.geometries.values()
+		{
+			s.serialize_element(&geometry)?;
+		}
 		s.end()
 	}
 }
@@ -197,11 +197,11 @@ impl Serialize for MaterialSerialize
 {
 	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	{
-		let s = serializer.serialize_seq(Some(self.materials.len()))?;
-		//for geometry in self.materials.iter()
-		//{
-		//	s.serialize_element(&geometry)?;
-		//}
+		let mut s = serializer.serialize_seq(Some(self.materials.len()))?;
+		for material in self.materials.iter()
+		{
+			s.serialize_element(&material)?;
+		}
 		s.end()
 	}
 }
