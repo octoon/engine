@@ -4,7 +4,6 @@
 extern crate octoon;
 
 use std::sync::Arc;
-use std::path::Path;
 
 use octoon::math::{float3, float4x4, Quaternion, One};
 use octoon::scene::core::{Object, Light, LightType};

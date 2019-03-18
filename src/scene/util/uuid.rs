@@ -15,6 +15,6 @@ impl OsRandNewV4 for uuid::Uuid
 
         rng.fill_bytes(&mut bytes);
 
-        uuid::Uuid::from_random_bytes(bytes)
+        uuid::Builder::from_bytes(bytes).build()
     }
 }
