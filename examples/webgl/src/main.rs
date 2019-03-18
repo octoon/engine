@@ -93,6 +93,8 @@ pub fn main()
 	scene.add(&sky);
 	//scene.add(model);
 
+	println!("{}", octoon::scene::to_string(&scene).unwrap());
+
 	#[cfg(any(target_arch = "wasm32", target_arch = "asmjs"))]
 	js!{
 		window.dat.light = {
