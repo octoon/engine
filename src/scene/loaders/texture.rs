@@ -8,7 +8,7 @@ pub struct TextureLoader {}
 
 impl TextureLoader
 {
-	fn load_from_image(img:ImageResult<DynamicImage>) -> Result<Texture>
+	fn load_from_image(img:ImageResult<DynamicImage>, name:Option<String>) -> Result<Texture>
 	{
 		let color_type;
 		let image = img?;
@@ -24,21 +24,33 @@ impl TextureLoader
 			image::ColorType::Palette(n) => { color_type = ColorType::Palette(n); },
 		};
 
-		Ok(Texture::new(color_type, image.width(), image.height(), image.raw_pixels()))
+		let mut texture = Texture::new(color_type, image.width(), image.height(), image.raw_pixels());
+		match name
+		{
+			Some(name) => texture.set_name(&name),
+			None => {},
+		}
+		Ok(texture)
 	}
 
 	pub fn load<P: AsRef<std::path::Path>>(path:P) -> Result<Texture>
 	{
-		TextureLoader::load_from_image(image::open(path))
+		let mut texture = TextureLoader::load_from_image(image::open(&path), None)?;
+		match path.as_ref().to_str()
+		{
+			Some(name) => texture.set_name(name),
+			None => {},
+		}
+		Ok(texture)
 	}
 
-	pub fn load_from_buf<R:BufRead + Seek>(r:R, format:image::ImageFormat) -> Result<Texture>
+	pub fn load_from_buf<R:BufRead + Seek>(r:R, format:image::ImageFormat, name:Option<String>) -> Result<Texture>
 	{
-		TextureLoader::load_from_image(image::load(r, format))
+		TextureLoader::load_from_image(image::load(r, format), name)
 	}
 
-	pub fn load_from_memory(buffer:&[u8]) -> Result<Texture>
+	pub fn load_from_memory(buffer:&[u8], name:Option<String>) -> Result<Texture>
 	{
-		TextureLoader::load_from_image(image::load_from_memory(buffer))
+		TextureLoader::load_from_image(image::load_from_memory(buffer), name)
 	}
 }

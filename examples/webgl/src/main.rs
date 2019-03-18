@@ -28,7 +28,7 @@ pub fn main()
 {
 	octoon::scene::core::log::init_log().unwrap();
 
-	let irradiance = Arc::new(TextureLoader::load_from_memory(include_bytes!("../static/output_iem.png")).unwrap());
+	let irradiance = Arc::new(TextureLoader::load_from_memory(include_bytes!("../static/output_iem.png"), Some("../static/output_iem.png".to_string())).unwrap());
 
 	let material = StandardMaterial::builder()
 		.set_albedo(float!(192./255.,185./255.,176./255.).into())

@@ -2,7 +2,7 @@ use std::sync::Arc;
 use crate::math::*;
 use super::texture::*;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Variant
 {
 	Boolean(bool),

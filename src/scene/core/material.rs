@@ -227,8 +227,9 @@ impl Serialize for Material
 {
 	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: Serializer
 	{
-		let mut s = serializer.serialize_struct("material", 1)?;
+		let mut s = serializer.serialize_struct("material", 4)?;
 		s.serialize_field("attrib", &self.input_layout())?;
+		s.serialize_field("parameters", &self.uniforms())?;
 		s.serialize_field("state", &self.as_ref())?;
 		s.end()
 	}

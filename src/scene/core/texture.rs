@@ -1,6 +1,7 @@
 use std::rc::Rc;
 use std::sync::Arc;
 use std::cell::RefCell;
+use serde::ser::{Serialize, Serializer, SerializeStruct};
 use super::{Resource, Sampler, SamplerWrap, SamplerFilter};
 use super::super::util::uuid::OsRandNewV4;
 
@@ -16,15 +17,16 @@ pub enum ColorType
 	Palette(u8),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash, Deserialize)]
 pub struct Texture
 {
+	pub uuid:uuid::Uuid,
 	pub sampler:Sampler,
 	pub width:u32,
 	pub height:u32,
 	pub color:ColorType,
 	pub raw_pixels:Vec<u8>,
-	uuid:uuid::Uuid
+	pub name:String
 }
 
 impl Texture
@@ -38,7 +40,8 @@ impl Texture
 			color:color_type,
 			width:width,
 			height:height,
-			raw_pixels:raw_pixels
+			raw_pixels:raw_pixels,
+			name:String::new()
 		}
 	}
 
@@ -64,6 +67,18 @@ impl Texture
 	pub fn raw_pixels(&self) -> &[u8]
 	{
 		&self.raw_pixels
+	}
+
+	#[inline(always)]
+	pub fn name(&self) -> &str
+	{
+		&self.name
+	}
+
+	#[inline(always)]
+	pub fn set_name(&mut self, name:&str)
+	{
+		self.name = name.to_string()
 	}
 }
 
@@ -91,5 +106,17 @@ impl From<Texture> for Arc<RefCell<Texture>>
 	fn from(texture:Texture) -> Self
 	{
 		Arc::new(RefCell::new(texture))
+	}
+}
+
+impl Serialize for Texture
+{
+	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	{
+		let mut s = serializer.serialize_struct("texture", 4)?;
+		s.serialize_field("uuid", &self.uuid)?;
+		s.serialize_field("name", &self.name)?;
+		s.serialize_field("sampler", &self.sampler)?;
+		s.end()
 	}
 }
