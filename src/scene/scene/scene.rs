@@ -210,7 +210,7 @@ impl Serialize for Scene
 {
 	fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	{
-		let mut s = serializer.serialize_struct("scene", 3)?;
+		let mut s = serializer.serialize_struct("scene", 5)?;
 		s.serialize_field("model", &ShapeSerialize::new(&self.shapes))?;
 		s.serialize_field("materials", &MaterialSerialize::new(&self.shapes))?;
 		s.serialize_field("shape", &self.shapes)?;
