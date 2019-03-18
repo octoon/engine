@@ -35,13 +35,11 @@ impl TextureLoader
 
 	pub fn load<P: AsRef<std::path::Path>>(path:P) -> Result<Texture>
 	{
-		let mut texture = TextureLoader::load_from_image(image::open(&path), None)?;
 		match path.as_ref().to_str()
 		{
-			Some(name) => texture.set_name(name),
-			None => {},
+			Some(name) => TextureLoader::load_from_image(image::open(&path), Some(name.to_string())),
+			None => TextureLoader::load_from_image(image::open(&path), None),
 		}
-		Ok(texture)
 	}
 
 	pub fn load_from_buf<R:BufRead + Seek>(r:R, format:image::ImageFormat, name:Option<String>) -> Result<Texture>
